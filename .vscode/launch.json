@@ -1,0 +1,14 @@
+{
+  "configurations": [
+      {
+          "type": "node",
+          "request": "attach",
+          "name": "Attach to Process",
+          "port": 9229,
+          "restart": true,
+          "timeout": 100,
+          "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**/*.js"],
+          "protocol": "inspector"
+      }
+  ]
+}

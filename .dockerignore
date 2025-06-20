@@ -1,0 +1,16 @@
+node_modules/
+README.md
+logs/
+.git/
+.gitignore
+.vscode/
+dist/
+*.md
+.env
+*.log
+test/
+**/*.spec.ts
+coverage/
+.prettierrc
+.eslintrc*
+docker-compose.yaml

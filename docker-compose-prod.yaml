@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./logs:/usr/src/app/logs
+      - ./.wwebjs_auth:/usr/src/app/.wwebjs_auth
+      - ./.wwebjs_cache:/usr/src/app/.wwebjs_cache
+    ports:
+      - "3025:3025"
+    env_file:
+      - .env
+
+  filebeat:
+    image: elastic/filebeat:8.16.5
+    user: root
+    command: [ "filebeat", "-e", "--strict.perms=false" ]
+    volumes:
+      - ./logs:/src/logs
+      - ./docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+
+networks:
+  default:
+    external:
+      name: tech-test-network
