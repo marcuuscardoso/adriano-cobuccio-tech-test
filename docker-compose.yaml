@@ -13,10 +13,13 @@ services:
     ports:
       - "${DATABASE_PORT}:5432"
     volumes:
-      - ./docker/postgresql/data:/var/lib/postgresql/data
-      - ./docker/postgresql/init-scripts:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/postgresql/data
     networks:
       - tech-test-network
+
+volumes:
+  dbdata:
+    driver: local
 
 networks:
   tech-test-network:
