@@ -7,6 +7,11 @@ export enum EUserType {
   BOTH = 'both',
 }
 
+export enum EUserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}
+
 @Entity('users')
 export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', name: 'name' })
@@ -29,4 +34,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({ type: 'varchar', name: 'type' })
   type: EUserType;
+
+  @Column({ type: 'varchar', name: 'role', default: EUserRole.USER })
+  role: EUserRole;
 }

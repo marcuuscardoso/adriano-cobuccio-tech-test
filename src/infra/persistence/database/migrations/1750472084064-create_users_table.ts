@@ -50,6 +50,13 @@ export class CreateUsersTable1750472084064 implements MigrationInterface {
                         isNullable: false,
                     },
                     {
+                        name: 'role',
+                        type: 'enum',
+                        enum: ['admin', 'user'],
+                        isNullable: false,
+                        default: 'user',
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp',
                         isNullable: false,
