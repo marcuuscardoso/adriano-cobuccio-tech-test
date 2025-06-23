@@ -6,12 +6,12 @@ export class RegisterUserDto {
   @IsString()
   @IsNotEmpty({ message: 'Name is required' })
   @MinLength(2, { message: 'Name must have at least 2 characters' })
-  name: string;
+    name: string;
 
   @IsEmail({}, { message: 'Email must have a valid format' })
   @IsNotEmpty({ message: 'Email is required' })
   @Transform(({ value }) => value?.toLowerCase?.())
-  email: string;
+    email: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Password is required' })
@@ -19,7 +19,7 @@ export class RegisterUserDto {
   @Matches(/^(?=.*[A-Za-z])(?=.*\d)/, {
     message: 'Password must contain at least one letter and one number'
   })
-  password: string;
+    password: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Phone is required' })
@@ -27,11 +27,11 @@ export class RegisterUserDto {
     message: 'Phone must have a valid format (ex: (11) 99999-9999)'
   })
   @Transform(({ value }) => value?.replace(/\D/g, ''))
-  phone: string;
+    phone: string;
 
   @IsString()
   @IsNotEmpty({ message: 'CPF is required' })
   @IsCpfValid()
   @Transform(({ value }) => value?.replace(/\D/g, ''))
-  cpf: string;
-} 
+    cpf: string;
+}

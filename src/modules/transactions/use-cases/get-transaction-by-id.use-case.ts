@@ -11,7 +11,7 @@ interface GetTransactionByIdRequest {
 export class GetTransactionByIdUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
-    private readonly logger: LoggerManager,
+    private readonly logger: LoggerManager
   ) {}
 
   async execute(request: GetTransactionByIdRequest): Promise<TransactionEntity> {

@@ -5,7 +5,7 @@ import { RefreshTokenRepository } from '@infra/persistence/database/repositories
 @Injectable()
 export class SignOutUseCase {
   constructor(
-    private readonly refreshTokenRepository: RefreshTokenRepository,
+    private readonly refreshTokenRepository: RefreshTokenRepository
   ) {}
 
   async execute(req: Request, res: Response): Promise<{ message: string }> {
@@ -24,4 +24,4 @@ export class SignOutUseCase {
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
   }
-} 
+}

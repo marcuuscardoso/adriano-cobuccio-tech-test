@@ -18,7 +18,7 @@ export class CreateTransferUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly dataSource: DataSource,
-    private readonly logger: LoggerManager,
+    private readonly logger: LoggerManager
   ) {}
 
   async execute(request: CreateTransferRequest): Promise<TransactionEntity> {
@@ -34,7 +34,7 @@ export class CreateTransferUseCase {
 
     try {
       const { sender, receiver } = await this.validateUsers(queryRunner, senderId, receiverId);
-      
+
       this.validateUserPermissions(sender, receiver);
       this.validateBalance(sender.balance, amount);
 
@@ -47,7 +47,7 @@ export class CreateTransferUseCase {
         receiverId,
         amount,
         description,
-        createdBy,
+        createdBy
       });
 
       await queryRunner.commitTransaction();
@@ -121,7 +121,7 @@ export class CreateTransferUseCase {
     const transaction = await this.transactionRepository.createWithQueryRunner({
       ...data,
       type: ETransactionType.TRANSFER,
-      status: ETransactionStatus.COMPLETED,
+      status: ETransactionStatus.COMPLETED
     }, queryRunner);
 
     return transaction;

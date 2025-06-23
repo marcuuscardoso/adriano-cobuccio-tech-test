@@ -7,7 +7,7 @@ import { RefreshTokenEntity } from '../entities/refresh-token.entity';
 export class RefreshTokenRepository {
   constructor(
     @InjectRepository(RefreshTokenEntity)
-    private readonly refreshTokenRepository: Repository<RefreshTokenEntity>,
+    private readonly refreshTokenRepository: Repository<RefreshTokenEntity>
   ) {}
 
   async create(tokenData: Partial<RefreshTokenEntity>): Promise<RefreshTokenEntity> {
@@ -18,13 +18,13 @@ export class RefreshTokenRepository {
   async findByToken(token: string): Promise<RefreshTokenEntity | null> {
     return this.refreshTokenRepository.findOne({
       where: { token, isRevoked: false },
-      relations: ['user'],
+      relations: ['user']
     });
   }
 
   async findByUserId(userId: string): Promise<RefreshTokenEntity[]> {
     return this.refreshTokenRepository.find({
-      where: { userId, isRevoked: false },
+      where: { userId, isRevoked: false }
     });
   }
 
@@ -44,7 +44,7 @@ export class RefreshTokenRepository {
 
   async deleteExpiredTokens(): Promise<void> {
     await this.refreshTokenRepository.delete({
-      expiresAt: { $lt: new Date() } as any,
+      expiresAt: { $lt: new Date() } as any
     });
   }
-} 
+}

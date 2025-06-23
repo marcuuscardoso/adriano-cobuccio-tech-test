@@ -10,15 +10,15 @@ import { UserRepository } from '@infra/persistence/database/repositories/user.re
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly configService: ConfigService,
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: UserRepository
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         JwtStrategy.extractJWTFromCookie,
-        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        ExtractJwt.fromAuthHeaderAsBearerToken()
       ]),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_SECRET') || 'jwt-secret-key',
+      secretOrKey: configService.get<string>('JWT_SECRET') || 'jwt-secret-key'
     });
   }
 
@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload) {
     const user = await this.userRepository.findById(payload.sub);
-    
+
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
@@ -41,7 +41,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       email: user.email,
       name: user.name,
       role: user.role,
-      type: user.type,
+      type: user.type
     };
   }
-} 
+}

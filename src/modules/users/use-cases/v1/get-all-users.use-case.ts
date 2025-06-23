@@ -14,4 +14,4 @@ export class GetAllUsersUseCase implements IUseCase<IGetAllUsersType, UserEntity
   async execute(params?: IGetAllUsersType): Promise<UserEntity[]> {
     return await this.userRepository.findAll();
   }
-} 
+}

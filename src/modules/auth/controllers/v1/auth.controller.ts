@@ -14,14 +14,14 @@ export class AuthController {
     private readonly signOutUseCase: SignOutUseCase,
     private readonly refreshTokenUseCase: RefreshTokenUseCase,
     private readonly getUserProfileUseCase: GetUserProfileUseCase,
-    private readonly registerUserUseCase: RegisterUserUseCase,
+    private readonly registerUserUseCase: RegisterUserUseCase
   ) {}
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   async register(@Body() registerUserDto: RegisterUserDto): Promise<UserResponseDto> {
     const user = await this.registerUserUseCase.execute(registerUserDto);
-    
+
     return {
       id: user.id,
       name: user.name,
@@ -32,8 +32,8 @@ export class AuthController {
       type: user.type,
       role: user.role,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    }
+      updatedAt: user.updatedAt
+    };
   }
 
   @Post('signin')
@@ -41,7 +41,7 @@ export class AuthController {
   async signIn(
     @Body() signInDto: SignInDto,
     @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @Res({ passthrough: true }) res: Response
   ) {
     return this.signInUseCase.execute(signInDto, req, res);
   }
@@ -50,7 +50,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async signOut(
     @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @Res({ passthrough: true }) res: Response
   ) {
     return this.signOutUseCase.execute(req, res);
   }
@@ -59,7 +59,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refreshToken(
     @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @Res({ passthrough: true }) res: Response
   ) {
     return this.refreshTokenUseCase.execute(req, res);
   }
@@ -69,4 +69,4 @@ export class AuthController {
   async me(@CurrentUser() user: any) {
     return this.getUserProfileUseCase.execute(user);
   }
-} 
+}

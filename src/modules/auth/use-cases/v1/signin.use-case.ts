@@ -14,7 +14,7 @@ export class SignInUseCase {
     private readonly userRepository: UserRepository,
     private readonly refreshTokenRepository: RefreshTokenRepository,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService
   ) {}
 
   async execute(signInDto: SignInDto, req: Request, res: Response): Promise<AuthResponse> {
@@ -22,27 +22,27 @@ export class SignInUseCase {
 
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-        throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     const payload: JwtPayload = {
       sub: user.id,
       email: user.email,
       role: user.role,
-      type: user.type,
+      type: user.type
     };
 
     const accessToken = this.jwtService.sign(payload, {
-      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m',
+      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m'
     });
 
     const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') || '7d',
+      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') || '7d'
     });
 
     const refreshTokenExpiry = new Date();
@@ -53,7 +53,7 @@ export class SignInUseCase {
       userId: user.id,
       expiresAt: refreshTokenExpiry,
       userAgent: req.headers['user-agent'],
-      ipAddress: req.ip,
+      ipAddress: req.ip
     });
 
     this.setTokenCookies(res, accessToken, refreshToken);
@@ -65,8 +65,8 @@ export class SignInUseCase {
         email: user.email,
         balance: user.balance,
         role: user.role,
-        type: user.type,
-      },
+        type: user.type
+      }
     };
   }
 
@@ -77,14 +77,14 @@ export class SignInUseCase {
       httpOnly: true,
       secure: isProduction,
       sameSite: 'strict',
-      maxAge: 15 * 60 * 1000,
+      maxAge: 15 * 60 * 1000
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: isProduction,
       sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
   }
-} 
+}

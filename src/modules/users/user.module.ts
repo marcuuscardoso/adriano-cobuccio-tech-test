@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@infra/persistence/database/database.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { UserController } from './controllers';
-import { 
+import {
   CreateUserUseCase,
   GetUserByIdUseCase,
   GetAllUsersUseCase,
@@ -18,14 +18,14 @@ import {
     GetUserByIdUseCase,
     GetAllUsersUseCase,
     UpdateUserUseCase,
-    DeleteUserUseCase,
+    DeleteUserUseCase
   ],
   exports: [
     CreateUserUseCase,
     GetUserByIdUseCase,
     GetAllUsersUseCase,
     UpdateUserUseCase,
-    DeleteUserUseCase,
-  ],
+    DeleteUserUseCase
+  ]
 })
 export class UserModule {}

@@ -5,5 +5,5 @@ export const entitiesProvider = [
   BaseEntity,
   UserEntity,
   RefreshTokenEntity,
-  TransactionEntity,
+  TransactionEntity
 ];

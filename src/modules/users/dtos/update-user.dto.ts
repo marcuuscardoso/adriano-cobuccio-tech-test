@@ -4,34 +4,34 @@ import { EUserType, EUserRole } from '@infra/persistence/database/entities/user.
 export class UpdateUserDto {
   @IsString()
   @IsOptional()
-  name?: string;
+    name?: string;
 
   @IsEmail()
   @IsOptional()
-  email?: string;
+    email?: string;
 
   @IsString()
   @IsOptional()
-  password?: string;
+    password?: string;
 
   @IsString()
   @IsOptional()
-  phone?: string;
+    phone?: string;
 
   @IsString()
   @IsOptional()
-  cpf?: string;
+    cpf?: string;
 
   @IsNumber()
   @Min(0)
   @IsOptional()
-  balance?: number;
+    balance?: number;
 
   @IsEnum(EUserType)
   @IsOptional()
-  type?: EUserType;
+    type?: EUserType;
 
   @IsEnum(EUserRole)
   @IsOptional()
-  role?: EUserRole;
+    role?: EUserRole;
 }

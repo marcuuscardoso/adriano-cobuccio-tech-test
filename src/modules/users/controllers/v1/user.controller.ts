@@ -8,7 +8,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
-  Patch,
+  Patch
 } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../../dtos';
 import { JwtAuthGuard, RolesGuard } from '@modules/auth/guards';
@@ -31,7 +31,7 @@ export class UserController {
     private readonly getUserByIdUseCase: GetUserByIdUseCase,
     private readonly getAllUsersUseCase: GetAllUsersUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly deleteUserUseCase: DeleteUserUseCase
   ) {}
 
   @Post()
@@ -40,7 +40,7 @@ export class UserController {
   async create(@Body() createUserDto: CreateUserDto, @CurrentUser() currentUser: any): Promise<UserResponseDto> {
     const user = await this.createUserUseCase.execute({
       ...createUserDto,
-      createdBy: currentUser.id,
+      createdBy: currentUser.id
     });
 
     return this.toResponseDto(user);
@@ -68,12 +68,12 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-    @CurrentUser() currentUser: any,
+    @CurrentUser() currentUser: any
   ): Promise<UserResponseDto> {
     const user = await this.updateUserUseCase.execute({
       id,
       ...updateUserDto,
-      updatedBy: currentUser.id,
+      updatedBy: currentUser.id
     });
 
     return this.toResponseDto(user);
@@ -97,7 +97,7 @@ export class UserController {
       type: user.type,
       role: user.role,
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      updatedAt: user.updatedAt
     };
   }
 }

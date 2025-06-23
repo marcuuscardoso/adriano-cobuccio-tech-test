@@ -14,15 +14,15 @@ export class GetUserByIdUseCase implements IUseCase<IGetUserByIdType, UserEntity
 
   async execute(params: IGetUserByIdType): Promise<UserEntity> {
     const user = await this.userRepository.findById(params.id);
-    
+
     if (!user) {
       throw new BusinessException('User not found', {
         detail: `User with ID ${params.id} was not found`,
         title: 'User not found',
-        code: 'USER_NOT_FOUND',
+        code: 'USER_NOT_FOUND'
       });
     }
 
     return user;
   }
-} 
+}

@@ -7,13 +7,13 @@ import { TransactionEntity, ETransactionStatus, ETransactionType } from '../enti
 export class TransactionRepository {
   constructor(
     @InjectRepository(TransactionEntity)
-    private readonly transactionRepository: Repository<TransactionEntity>,
+    private readonly transactionRepository: Repository<TransactionEntity>
   ) {}
 
   async findById(id: string): Promise<TransactionEntity | null> {
     return this.transactionRepository.findOne({
       where: { id },
-      relations: ['sender', 'receiver', 'originalTransaction', 'reversedTransaction'],
+      relations: ['sender', 'receiver', 'originalTransaction', 'reversedTransaction']
     });
   }
 
@@ -24,7 +24,7 @@ export class TransactionRepository {
         { receiverId: userId }
       ],
       relations: ['sender', 'receiver'],
-      order: { createdAt: 'DESC' },
+      order: { createdAt: 'DESC' }
     });
   }
 
@@ -32,7 +32,7 @@ export class TransactionRepository {
     return this.transactionRepository.find({
       where: { senderId },
       relations: ['receiver'],
-      order: { createdAt: 'DESC' },
+      order: { createdAt: 'DESC' }
     });
   }
 
@@ -40,7 +40,7 @@ export class TransactionRepository {
     return this.transactionRepository.find({
       where: { receiverId },
       relations: ['sender'],
-      order: { createdAt: 'DESC' },
+      order: { createdAt: 'DESC' }
     });
   }
 
@@ -48,7 +48,7 @@ export class TransactionRepository {
     return this.transactionRepository.find({
       where: { status },
       relations: ['sender', 'receiver'],
-      order: { createdAt: 'DESC' },
+      order: { createdAt: 'DESC' }
     });
   }
 
@@ -71,7 +71,7 @@ export class TransactionRepository {
   }
 
   async updateStatusWithQueryRunner(
-    id: string, 
+    id: string,
     status: ETransactionStatus,
     queryRunner: QueryRunner
   ): Promise<void> {
@@ -79,7 +79,7 @@ export class TransactionRepository {
   }
 
   async linkReversalTransaction(
-    originalTransactionId: string, 
+    originalTransactionId: string,
     reversalTransactionId: string
   ): Promise<void> {
     await this.transactionRepository.update(originalTransactionId, {
@@ -90,12 +90,12 @@ export class TransactionRepository {
 
   async findPendingTransactions(): Promise<TransactionEntity[]> {
     return this.transactionRepository.find({
-      where: { 
+      where: {
         status: ETransactionStatus.PENDING,
         type: ETransactionType.TRANSFER
       },
       relations: ['sender', 'receiver'],
-      order: { createdAt: 'ASC' },
+      order: { createdAt: 'ASC' }
     });
   }
 }

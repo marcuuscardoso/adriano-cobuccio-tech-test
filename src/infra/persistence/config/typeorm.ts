@@ -24,9 +24,9 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
       retryDelay: 700,
       ...(process.env.NODE_ENV !== 'development' && {
         ssl: {
-          rejectUnauthorized: false,
-        },
-      }),
+          rejectUnauthorized: false
+        }
+      })
     };
   }
 }

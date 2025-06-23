@@ -21,11 +21,11 @@ import { RegisterUserUseCase } from '@modules/users/use-cases';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET') || 'jwt-secret-key',
         signOptions: {
-          expiresIn: configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m',
-        },
+          expiresIn: configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m'
+        }
       }),
-      inject: [ConfigService],
-    }),
+      inject: [ConfigService]
+    })
   ],
   controllers: [AuthController],
   providers: [
@@ -38,12 +38,12 @@ import { RegisterUserUseCase } from '@modules/users/use-cases';
     SignOutUseCase,
     RefreshTokenUseCase,
     GetUserProfileUseCase,
-    RegisterUserUseCase,
+    RegisterUserUseCase
   ],
   exports: [
     JwtAuthGuard,
     RolesGuard,
-    JwtStrategy,
-  ],
+    JwtStrategy
+  ]
 })
 export class AuthModule {}

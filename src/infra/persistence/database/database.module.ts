@@ -7,11 +7,11 @@ import { repositoriesProvider } from './repositories/repositories';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      useClass: TypeOrmConfig,
+      useClass: TypeOrmConfig
     }),
-    TypeOrmModule.forFeature(entitiesProvider),
+    TypeOrmModule.forFeature(entitiesProvider)
   ],
   exports: [...repositoriesProvider],
-  providers: [...repositoriesProvider],
+  providers: [...repositoriesProvider]
 })
 export class DatabaseModule {}

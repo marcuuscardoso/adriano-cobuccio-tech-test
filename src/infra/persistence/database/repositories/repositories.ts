@@ -5,5 +5,5 @@ import { TransactionRepository } from './transaction.repository';
 export const repositoriesProvider = [
   UserRepository,
   RefreshTokenRepository,
-  TransactionRepository,
+  TransactionRepository
 ];

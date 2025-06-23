@@ -6,25 +6,25 @@ export class BaseEntity {
 
   @CreateDateColumn({
     type: 'timestamp',
-    name: 'created_at',
+    name: 'created_at'
   })
-  createdAt: Date;
+    createdAt: Date;
 
   @Column({ type: 'uuid', name: 'created_by' })
-  createdBy?: string;
+    createdBy?: string;
 
   @Column({ type: 'uuid', name: 'updated_by' })
-  updatedBy?: string;
+    updatedBy?: string;
 
   @UpdateDateColumn({
     type: 'timestamp',
-    name: 'updated_at',
+    name: 'updated_at'
   })
-  updatedAt?: Date;
+    updatedAt?: Date;
 
   @Column({ type: 'uuid', name: 'deleted_by', nullable: true })
-  deletedBy?: string;
+    deletedBy?: string;
 
   @DeleteDateColumn({ type: 'timestamp', name: 'deleted_at' })
-  deletedAt?: Date;
+    deletedAt?: Date;
 }

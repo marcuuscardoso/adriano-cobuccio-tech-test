@@ -16,7 +16,7 @@ export class ReverseTransactionUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly dataSource: DataSource,
-    private readonly logger: LoggerManager,
+    private readonly logger: LoggerManager
   ) {}
 
   async execute(request: ReverseTransactionRequest): Promise<TransactionEntity> {
@@ -36,13 +36,13 @@ export class ReverseTransactionUseCase {
 
     try {
       const { sender, receiver } = await this.validateUsers(queryRunner, originalTransaction);
-      
+
       this.validateReceiverBalance(receiver.balance, originalTransaction.amount);
 
-      this.logger.info('Reverting balances', { 
-        originalSender: originalTransaction.senderId, 
-        originalReceiver: originalTransaction.receiverId, 
-        amount: originalTransaction.amount 
+      this.logger.info('Reverting balances', {
+        originalSender: originalTransaction.senderId,
+        originalReceiver: originalTransaction.receiverId,
+        amount: originalTransaction.amount
       });
       await this.revertBalances(queryRunner, originalTransaction, sender.balance, receiver.balance);
 
@@ -50,7 +50,7 @@ export class ReverseTransactionUseCase {
       const reversalTransaction = await this.createReversalTransaction(queryRunner, {
         originalTransaction,
         reason,
-        reversedBy,
+        reversedBy
       });
 
       await this.linkTransactions(queryRunner, originalTransaction.id, reversalTransaction.id);
@@ -117,11 +117,11 @@ export class ReverseTransactionUseCase {
     receiverBalance: number
   ): Promise<void> {
     await Promise.all([
-      queryRunner.manager.update(UserEntity, { id: originalTransaction.senderId }, { 
-        balance: senderBalance + originalTransaction.amount 
+      queryRunner.manager.update(UserEntity, { id: originalTransaction.senderId }, {
+        balance: senderBalance + originalTransaction.amount
       }),
-      queryRunner.manager.update(UserEntity, { id: originalTransaction.receiverId }, { 
-        balance: receiverBalance - originalTransaction.amount 
+      queryRunner.manager.update(UserEntity, { id: originalTransaction.receiverId }, {
+        balance: receiverBalance - originalTransaction.amount
       })
     ]);
   }
@@ -137,7 +137,7 @@ export class ReverseTransactionUseCase {
       type: ETransactionType.REVERSAL,
       status: ETransactionStatus.COMPLETED,
       originalTransactionId: originalTransaction.id,
-      createdBy: reversedBy,
+      createdBy: reversedBy
     }, queryRunner);
   }
 

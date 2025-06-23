@@ -16,7 +16,7 @@ export class CreateUserUseCase implements IUseCase<ICreateUserType, UserEntity> 
       throw new BusinessException('User already exists with this email', {
         detail: 'The provided email is already in use by another user',
         title: 'Email already exists',
-        code: 'USER_EMAIL_ALREADY_EXISTS',
+        code: 'USER_EMAIL_ALREADY_EXISTS'
       });
     }
 
@@ -25,7 +25,7 @@ export class CreateUserUseCase implements IUseCase<ICreateUserType, UserEntity> 
       throw new BusinessException('User already exists with this CPF', {
         detail: 'The provided CPF is already in use by another user',
         title: 'CPF already exists',
-        code: 'USER_CPF_ALREADY_EXISTS',
+        code: 'USER_CPF_ALREADY_EXISTS'
       });
     }
 
@@ -34,9 +34,9 @@ export class CreateUserUseCase implements IUseCase<ICreateUserType, UserEntity> 
     const userData = {
       ...params,
       password: hashedPassword,
-      balance: params.balance ?? 0,
+      balance: params.balance ?? 0
     };
 
     return await this.userRepository.create(userData);
   }
-} 
+}

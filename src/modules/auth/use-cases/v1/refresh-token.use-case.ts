@@ -10,7 +10,7 @@ export class RefreshTokenUseCase {
   constructor(
     private readonly refreshTokenRepository: RefreshTokenRepository,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    private readonly configService: ConfigService
   ) {}
 
   async execute(req: Request, res: Response): Promise<AuthResponse> {
@@ -31,18 +31,18 @@ export class RefreshTokenUseCase {
       sub: user.id,
       email: user.email,
       role: user.role,
-      type: user.type,
+      type: user.type
     };
 
     const newAccessToken = this.jwtService.sign(payload, {
-      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m',
+      expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m'
     });
 
     res.cookie('accessToken', newAccessToken, {
       httpOnly: true,
       secure: this.configService.get<string>('NODE_ENV') === 'production',
       sameSite: 'strict',
-      maxAge: 15 * 60 * 1000,
+      maxAge: 15 * 60 * 1000
     });
 
     return {
@@ -52,8 +52,8 @@ export class RefreshTokenUseCase {
         email: user.email,
         balance: user.balance,
         role: user.role,
-        type: user.type,
+        type: user.type
       }
     };
   }
-} 
+}

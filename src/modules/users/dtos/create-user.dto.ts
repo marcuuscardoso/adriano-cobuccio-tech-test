@@ -4,34 +4,34 @@ import { EUserType, EUserRole } from '@infra/persistence/database/entities/user.
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+    name: string;
 
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+    email: string;
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+    password: string;
 
   @IsString()
   @IsNotEmpty()
-  phone: string;
+    phone: string;
 
   @IsString()
   @IsNotEmpty()
-  cpf: string;
+    cpf: string;
 
   @IsNumber()
   @Min(0)
   @IsOptional()
-  balance?: number = 0;
+    balance?: number = 0;
 
   @IsEnum(EUserType)
   @IsNotEmpty()
-  type: EUserType;
+    type: EUserType;
 
   @IsEnum(EUserRole)
   @IsOptional()
-  role?: EUserRole = EUserRole.USER;
+    role?: EUserRole = EUserRole.USER;
 }

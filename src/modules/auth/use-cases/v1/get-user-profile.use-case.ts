@@ -18,7 +18,7 @@ export class GetUserProfileUseCase {
       email: user.email,
       balance: user.balance,
       role: user.role,
-      type: user.type,
+      type: user.type
     };
   }
-} 
+}

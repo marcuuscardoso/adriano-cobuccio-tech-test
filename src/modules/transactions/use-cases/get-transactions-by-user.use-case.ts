@@ -11,7 +11,7 @@ interface GetTransactionsByUserRequest {
 export class GetTransactionsByUserUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
-    private readonly logger: LoggerManager,
+    private readonly logger: LoggerManager
   ) {}
 
   async execute(request: GetTransactionsByUserRequest): Promise<TransactionEntity[]> {
@@ -19,7 +19,7 @@ export class GetTransactionsByUserUseCase {
 
     try {
       const transactions = await this.transactionRepository.findByUserId(userId);
-      
+
       this.logger.info('Transactions fetched', { userId, count: transactions.length });
       return transactions;
     } catch (error: any) {

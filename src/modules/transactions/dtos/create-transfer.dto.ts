@@ -3,14 +3,14 @@ import { IsNotEmpty, IsUUID, IsNumber, IsOptional, IsString, Min } from 'class-v
 export class CreateTransferDto {
   @IsNotEmpty()
   @IsUUID()
-  receiverId: string;
+    receiverId: string;
 
   @IsNotEmpty()
   @IsNumber()
   @Min(0.01)
-  amount: number;
+    amount: number;
 
   @IsOptional()
   @IsString()
-  description?: string;
-} 
+    description?: string;
+}

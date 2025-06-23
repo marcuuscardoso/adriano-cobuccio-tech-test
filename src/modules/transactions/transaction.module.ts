@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DatabaseModule } from '@infra/persistence/database/database.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TransactionController } from './controllers';
-import { 
+import {
   CreateTransferUseCase,
   ReverseTransactionUseCase,
   GetTransactionByIdUseCase,
@@ -18,13 +18,13 @@ import { LoggerManager } from '@commons/general/loggers';
     ReverseTransactionUseCase,
     GetTransactionByIdUseCase,
     GetTransactionsByUserUseCase,
-    LoggerManager,
+    LoggerManager
   ],
   exports: [
     CreateTransferUseCase,
     ReverseTransactionUseCase,
     GetTransactionByIdUseCase,
-    GetTransactionsByUserUseCase,
-  ],
+    GetTransactionsByUserUseCase
+  ]
 })
 export class TransactionModule {}

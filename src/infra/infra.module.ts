@@ -6,6 +6,6 @@ import { Module } from '@nestjs/common';
   imports: [DatabaseModule],
   controllers: [],
   exports: [TypeOrmConfig, DatabaseModule],
-  providers: [TypeOrmConfig, DatabaseModule],
+  providers: [TypeOrmConfig, DatabaseModule]
 })
 export class InfraModule {}

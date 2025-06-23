@@ -50,4 +50,4 @@ export class TypeOrmLogger implements ITypeOrmLogger {
         break;
     }
   }
-} 
+}

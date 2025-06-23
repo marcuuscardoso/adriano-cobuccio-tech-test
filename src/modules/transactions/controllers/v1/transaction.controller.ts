@@ -6,7 +6,7 @@ import {
   Param,
   HttpCode,
   HttpStatus,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { CreateTransferDto, ReverseTransactionDto, TransactionResponseDto } from '../../dtos';
 import { JwtAuthGuard, RolesGuard } from '@modules/auth/guards';
@@ -27,7 +27,7 @@ export class TransactionController {
     private readonly createTransferUseCase: CreateTransferUseCase,
     private readonly reverseTransactionUseCase: ReverseTransactionUseCase,
     private readonly getTransactionByIdUseCase: GetTransactionByIdUseCase,
-    private readonly getTransactionsByUserUseCase: GetTransactionsByUserUseCase,
+    private readonly getTransactionsByUserUseCase: GetTransactionsByUserUseCase
   ) {}
 
   @Post('transfer')
@@ -35,14 +35,14 @@ export class TransactionController {
   @Roles(EUserRole.USER, EUserRole.ADMIN)
   async createTransfer(
     @Body() createTransferDto: CreateTransferDto,
-    @CurrentUser() currentUser: any,
+    @CurrentUser() currentUser: any
   ): Promise<TransactionResponseDto> {
     const transaction = await this.createTransferUseCase.execute({
       senderId: currentUser.id,
       receiverId: createTransferDto.receiverId,
       amount: createTransferDto.amount,
       description: createTransferDto.description,
-      createdBy: currentUser.id,
+      createdBy: currentUser.id
     });
 
     return this.toResponseDto(transaction);
@@ -53,12 +53,12 @@ export class TransactionController {
   @Roles(EUserRole.ADMIN)
   async reverseTransaction(
     @Body() reverseTransactionDto: ReverseTransactionDto,
-    @CurrentUser() currentUser: any,
+    @CurrentUser() currentUser: any
   ): Promise<TransactionResponseDto> {
     const transaction = await this.reverseTransactionUseCase.execute({
       transactionId: reverseTransactionDto.transactionId,
       reason: reverseTransactionDto.reason,
-      reversedBy: currentUser.id,
+      reversedBy: currentUser.id
     });
 
     return this.toResponseDto(transaction);
@@ -69,12 +69,12 @@ export class TransactionController {
   @Roles(EUserRole.USER, EUserRole.ADMIN)
   async findById(
     @Param('id') id: string,
-    @CurrentUser() currentUser: any,
+    @CurrentUser() currentUser: any
   ): Promise<TransactionResponseDto> {
     const transaction = await this.getTransactionByIdUseCase.execute({ id });
 
-    if (currentUser.role !== EUserRole.ADMIN && 
-        transaction.senderId !== currentUser.id && 
+    if (currentUser.role !== EUserRole.ADMIN &&
+        transaction.senderId !== currentUser.id &&
         transaction.receiverId !== currentUser.id) {
       throw new Error('You can only view your own transactions');
     }
@@ -94,8 +94,8 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   @Roles(EUserRole.USER, EUserRole.ADMIN)
   async findMyTransactions(@CurrentUser() currentUser: any): Promise<TransactionResponseDto[]> {
-    const transactions = await this.getTransactionsByUserUseCase.execute({ 
-      userId: currentUser.id 
+    const transactions = await this.getTransactionsByUserUseCase.execute({
+      userId: currentUser.id
     });
     return transactions.map(transaction => this.toResponseDto(transaction));
   }
@@ -114,7 +114,7 @@ export class TransactionController {
       originalTransactionId: transaction.originalTransactionId,
       reversedTransactionId: transaction.reversedTransactionId,
       createdAt: transaction.createdAt,
-      updatedAt: transaction.updatedAt,
+      updatedAt: transaction.updatedAt
     };
   }
 }

@@ -25,4 +25,4 @@ export class RefreshTokenEntity extends BaseEntity {
 
   @Column({ type: 'boolean', name: 'is_revoked', default: false })
   isRevoked: boolean;
-} 
+}

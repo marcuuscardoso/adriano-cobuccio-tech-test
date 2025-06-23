@@ -9,4 +9,4 @@ export interface AuthResponse {
     role: EUserRole;
     type: EUserType;
   };
-} 
+}

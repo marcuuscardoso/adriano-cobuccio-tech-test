@@ -7,24 +7,24 @@ import { UserEntity } from '../entities/user.entity';
 export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly userRepository: Repository<UserEntity>
   ) {}
 
   async findByEmail(email: string): Promise<UserEntity | null> {
     return this.userRepository.findOne({
-      where: { email },
+      where: { email }
     });
   }
 
   async findByCpf(cpf: string): Promise<UserEntity | null> {
     return this.userRepository.findOne({
-      where: { cpf },
+      where: { cpf }
     });
   }
 
   async findById(id: string): Promise<UserEntity | null> {
     return this.userRepository.findOne({
-      where: { id },
+      where: { id }
     });
   }
 

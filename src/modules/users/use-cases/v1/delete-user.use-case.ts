@@ -18,10 +18,10 @@ export class DeleteUserUseCase implements IUseCase<IDeleteUserType, void> {
       throw new BusinessException('User not found', {
         detail: `User with ID ${params.id} was not found`,
         title: 'User not found',
-        code: 'USER_NOT_FOUND',
+        code: 'USER_NOT_FOUND'
       });
     }
 
     await this.userRepository.delete(params.id);
   }
-} 
+}

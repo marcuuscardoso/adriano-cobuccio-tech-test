@@ -16,7 +16,7 @@ export class UpdateUserUseCase implements IUseCase<IUpdateUserType, UserEntity> 
       throw new BusinessException('User not found', {
         detail: `User with ID ${params.id} was not found`,
         title: 'User not found',
-        code: 'USER_NOT_FOUND',
+        code: 'USER_NOT_FOUND'
       });
     }
 
@@ -26,7 +26,7 @@ export class UpdateUserUseCase implements IUseCase<IUpdateUserType, UserEntity> 
         throw new BusinessException('Email is already in use', {
           detail: 'The provided email is already in use by another user',
           title: 'Email already exists',
-          code: 'USER_EMAIL_ALREADY_EXISTS',
+          code: 'USER_EMAIL_ALREADY_EXISTS'
         });
       }
     }
@@ -37,7 +37,7 @@ export class UpdateUserUseCase implements IUseCase<IUpdateUserType, UserEntity> 
         throw new BusinessException('CPF is already in use', {
           detail: 'The provided CPF is already in use by another user',
           title: 'CPF already exists',
-          code: 'USER_CPF_ALREADY_EXISTS',
+          code: 'USER_CPF_ALREADY_EXISTS'
         });
       }
     }
@@ -54,10 +54,10 @@ export class UpdateUserUseCase implements IUseCase<IUpdateUserType, UserEntity> 
       throw new BusinessException('Error updating user', {
         detail: 'Unable to update the user',
         title: 'Update error',
-        code: 'USER_UPDATE_ERROR',
+        code: 'USER_UPDATE_ERROR'
       });
     }
 
     return updatedUser;
   }
-} 
+}
