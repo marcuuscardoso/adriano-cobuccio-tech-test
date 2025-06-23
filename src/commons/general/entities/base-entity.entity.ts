@@ -27,7 +27,4 @@ export class BaseEntity {
 
   @DeleteDateColumn({ type: 'timestamp', name: 'deleted_at' })
   deletedAt?: Date;
-
-  @Column({ type: 'uuid', name: 'tenant_id' })
-  tenantId?: string;
 }

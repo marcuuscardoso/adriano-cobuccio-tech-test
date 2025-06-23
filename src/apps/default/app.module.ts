@@ -5,6 +5,7 @@ import { LoggerManager } from '@commons/general/loggers/logger-manager.logger';
 import { HttpServiceLoggerInterceptor } from '@commons/general/interceptors/http-logger.interceptor';
 import { HttpModule } from '@nestjs/axios';
 import { InfraModule } from '@infra/infra.module';
+import { AuthModule } from '@modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { InfraModule } from '@infra/infra.module';
       timeout: 5000,
       maxRedirects: 5
     }),
-    InfraModule
+    InfraModule,
+    AuthModule
   ],
   controllers: [HealthController],
   providers: [

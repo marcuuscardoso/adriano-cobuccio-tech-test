@@ -1,5 +1,6 @@
 import helmet from 'helmet';
 import * as bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './default/app.module';
 import { INestApplication, ValidationPipe, VersioningType } from '@nestjs/common';
@@ -38,6 +39,7 @@ async function bootstrap(): Promise<void> {
   );
 
   app.use(helmet());
+  app.use(cookieParser());
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
