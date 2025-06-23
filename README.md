@@ -1,98 +1,422 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de Transferências Financeiras - Tech Test
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Sistema completo de transferências financeiras desenvolvido com NestJS, incluindo autenticação JWT, gestão de usuários, transações, sistema de logging avançado e monitoramento com ELK Stack.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Índice
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Descrição](#descrição)
+- [Requisitos](#requisitos)
+- [Instalação e Inicialização](#instalação-e-inicialização)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Documentação da API](#documentação-da-api)
+- [Sistema de Monitoramento e Logging](#sistema-de-monitoramento-e-logging)
 
-## Project setup
 
-```bash
-$ npm install
+## Descrição
+
+Este projeto é um teste técnico que implementa um sistema completo de transferências financeiras. O sistema permite:
+
+- Registro e autenticação de usuários
+- Gestão completa de usuários (CRUD)
+- Transferências entre contas
+- Reversão de transações (apenas administradores)
+- Sistema de logging estruturado
+- Monitoramento em tempo real com ELK Stack
+
+
+## Requisitos
+
+### Requisitos do Sistema
+- **Node.js** >= 18.x
+- **NPM** >= 8.x
+- **Docker** e **Docker Compose**
+
+### Variáveis de Ambiente
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```env
+NODE_ENV=development
+API_PORT=3025
+SERVICE_HOST=0.0.0.0
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=tech-test
+DATABASE_PASSWORD=password
+DATABASE_NAME=tech-test
+JWT_ACCESS_EXPIRES_IN=5m
+JWT_REFRESH_EXPIRES_IN=7d
+JWT_SECRET=secret
 ```
 
-## Compile and run the project
+## Instalação e Inicialização
 
+### 1. Clone o repositório
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/marcuuscardoso/adriano-cobuccio-tech-test
+cd adriano-cobuccio-tech-test
 ```
 
-## Run tests
-
+### 2. Instale as dependências
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
+### 3. Configure as variáveis de ambiente
+Crie o arquivo `.env` na raiz do projeto com as configurações mostradas na seção [Requisitos](#requisitos).
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### 4. Inicie os serviços de infraestrutura
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 5. Execute a aplicação
+```bash
+npm run start:dev
+```
 
-## Resources
+A aplicação estará disponível em `http://localhost:3025`
 
-Check out a few resources that may come in handy when working with NestJS:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
+## Estrutura do Projeto
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+O projeto segue uma arquitetura modular baseada em Clean Architecture e Domain-Driven Design:
 
-## Stay in touch
+```
+src/
+├── apps/                    # Configuração principal da aplicação
+│   ├── default/            # Módulo principal e health check
+│   └── main.ts             # Ponto de entrada da aplicação
+│
+├── modules/                # Módulos de domínio
+│   ├── auth/              # Autenticação e autorização
+│   ├── users/             # Gestão de usuários
+│   └── transactions/      # Sistema de transações
+│
+├── commons/               # Utilitários compartilhados
+│   ├── general/          # Filtros, interceptors, loggers
+│   └── validators/       # Validadores customizados
+│
+└── infra/                # Infraestrutura
+    └── persistence/      # Configuração do banco de dados
+        ├── config/       # Configuração do TypeORM
+        ├── database/     # Entidades, migrations, repositórios
+        └── entities/     # Definição das entidades
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Documentação da API
 
-## License
+A API utiliza versionamento através da URL (`/api/v1/`) e implementa autenticação JWT para proteger as rotas. Todas as rotas retornam dados no formato JSON.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Base URL:** `http://localhost:3025/api`
+
+**Autenticação:** Bearer Token (JWT) no header `Authorization`
+
+---
+
+### Módulo de Autenticação
+
+**POST** `/v1/auth/register`
+
+Cria uma nova conta de usuário no sistema
+
+**Payload:**
+```json
+{
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "password": "minhasenha123",
+  "phone": "11987654321",
+  "cpf": "12345678901",
+  "type": "both",
+  "balance": 1000.00
+}
+```
+---
+
+**POST** `/v1/auth/signin`
+
+Autentica um usuário e retorna tokens de acesso via cookie httpOnly
+
+**Payload:**
+```json
+{
+  "email": "joao@email.com",
+  "password": "minhasenha123"
+}
+```
+
+---
+
+**POST** `/v1/auth/signout`
+
+Desloga o usuário e invalida os tokens
+
+**Resposta de Sucesso (200):**
+```json
+{
+  "message": "Logout realizado com sucesso"
+}
+```
+
+---
+
+**POST** `/v1/auth/refresh`
+
+Renova o token de acesso usando o refresh token
+
+
+**Resposta de Sucesso (200):**
+```json
+{
+  "accessToken": "novo-jwt-token-aqui"
+}
+```
+
+---
+
+**GET** `/v1/auth/me`
+
+Retorna as informações do usuário autenticado
+
+**Resposta de Sucesso (200):**
+```json
+{
+  "id": "uuid-do-usuario",
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "phone": "11987654321",
+  "cpf": "12345678901",
+  "balance": 1000.00,
+  "type": "both",
+  "role": "user",
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T10:30:00.000Z"
+}
+```
+
+---
+
+### Módulo de Usuários
+
+
+**POST** `/v1/users`
+
+**Descrição:** Cria um novo usuário (apenas administradores)
+
+**Permissões:** ADMIN
+
+**Corpo da Requisição:** Mesmo formato do registro
+
+**Resposta:** Mesmo formato do registro
+
+---
+
+**GET** `/v1/users`
+
+Lista todos os usuários cadastrados no sistema
+
+**Resposta de Sucesso (200):**
+```json
+[
+  {
+    "id": "uuid-usuario-1",
+    "name": "João Silva",
+    "email": "joao@email.com",
+    "phone": "11987654321",
+    "cpf": "12345678901",
+    "balance": 1000.00,
+    "type": "both",
+    "role": "user",
+    "createdAt": "2024-01-15T10:30:00.000Z",
+    "updatedAt": "2024-01-15T10:30:00.000Z"
+  },
+]
+```
+
+---
+
+**GET** `/v1/users/:id`
+
+Retorna os dados de um usuário específico
+
+**Parâmetros da URL:**
+- `id`: UUID do usuário
+
+**Resposta de Sucesso (200):** Objeto do usuário (mesmo formato da listagem)
+
+---
+
+**PATCH** `/v1/users/:id`
+
+Atualiza os dados de um usuário existente
+
+**Parâmetros da URL:**
+- `id`: UUID do usuário
+
+**Corpo da Requisição:**
+```json
+{
+  "name": "João Silva Santos",
+  "phone": "11999888777",
+  "balance": 1500.00
+}
+```
+
+**Observações:**
+- Todos os campos são opcionais
+- Email e CPF não podem ser alterados
+- Senha deve ser enviada como `password` se for alterada
+
+---
+
+**DELETE** `/v1/users/:id`
+
+Remove um usuário do sistema
+
+**Parâmetros da URL:**
+- `id`: UUID do usuário
+
+**Resposta de Sucesso (204):** Sem conteúdo
+
+---
+
+### Módulo de Transações
+
+**POST** `/v1/transactions/transfer`
+
+**Corpo da Requisição:**
+```json
+{
+  "receiverId": "uuid-do-destinatario",
+  "amount": 250.50,
+  "description": "Pagamento de serviços"
+}
+```
+
+**Regras de Negócio:**
+- O remetente deve ter saldo suficiente
+- Remetente e destinatário devem ser diferentes
+- Destinatário deve aceitar recebimentos (type: "receiver" ou "both")
+- Remetente deve poder enviar (type: "sender" ou "both")
+
+---
+
+**POST** `/v1/transactions/reverse`
+
+Reverte uma transação existente (apenas administradores)
+
+**Corpo da Requisição:**
+```json
+{
+  "transactionId": "uuid-da-transacao-original",
+  "reason": "Transação fraudulenta"
+}
+```
+**Regras de Negócio:**
+- Apenas transações "completed" podem ser revertidas
+- Uma transação só pode ser revertida uma vez
+- A reversão transfere o valor de volta ao remetente original
+
+---
+
+**GET** `/v1/transactions/:id`
+
+Retorna os detalhes de uma transação específica
+
+**Parâmetros da URL:**
+- `id`: UUID da transação
+
+**Resposta de Sucesso (200):** Objeto da transação (mesmo formato da criação)
+
+**Regras de Acesso:**
+- Usuários comuns só podem ver transações onde são remetente ou destinatário
+- Administradores podem ver qualquer transação
+
+---
+
+**GET** `/v1/transactions/user/:userId`
+
+Lista todas as transações de um usuário específico
+
+**Parâmetros da URL:**
+- `userId`: UUID do usuário
+
+**Resposta de Sucesso (200):** Array de transações
+
+---
+
+**GET** `/v1/transactions/my/transactions`
+
+Lista todas as transações do usuário autenticado
+
+**Resposta de Sucesso (200):**
+```json
+[
+  {
+    "id": "uuid-transacao-1",
+    "amount": 250.50,
+    "description": "Pagamento de serviços",
+    "type": "transfer",
+    "status": "completed",
+    "senderId": "uuid-do-usuario-logado",
+    "receiverId": "uuid-do-destinatario",
+    "senderName": "João Silva",
+    "receiverName": "Maria Santos",
+    "createdAt": "2024-01-15T15:30:00.000Z",
+    "updatedAt": "2024-01-15T15:30:00.000Z"
+  }
+]
+```
+
+---
+
+### Health Check
+
+**GET** `/health/status`
+
+Verifica se a aplicação está funcionando corretamente
+
+**Resposta de Sucesso (200):**
+```json
+{
+  "status": true
+}
+```
+
+
+## Sistema de Monitoramento e Logging
+
+O projeto implementa um sistema completo de observabilidade usando ELK Stack para monitoramento e análise de logs em tempo real.
+
+### Componentes do Sistema
+
+#### Winston Logger
+- Sistema de logging estruturado com formato JSON
+- Logs rotativos diários na pasta `logs/app-YYYY-MM-DD.log`
+- Níveis de log: error, warn, info, http, debug
+- Retenção automática de 30 dias
+- Logs tanto no console quanto em arquivos
+
+#### Elasticsearch
+- Armazenamento e indexação centralizada dos logs
+- Configuração single-node para desenvolvimento
+- Permite buscas complexas e agregações nos logs
+
+#### Filebeat
+- Coleta automática dos logs da pasta `/logs`
+- Envia dados estruturados para o Elasticsearch
+- Processamento em tempo real dos logs
+
+#### Kibana
+- Interface web para visualização e análise
+- Disponível na porta 5601
+- Dashboards para monitoramento
+- Filtros e buscas nos logs
+
+### Acesso ao Sistema de Monitoramento
+
+- **Kibana Dashboard**: http://localhost:5601
+- **Elasticsearch API**: http://localhost:9200
+- **Logs locais**: Pasta `./logs/` no projeto
