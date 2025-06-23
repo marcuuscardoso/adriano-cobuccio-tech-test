@@ -78,6 +78,34 @@ npm run start:dev
 
 A aplicação estará disponível em `http://localhost:3025`
 
+Crie um usuário de administrador para ter acesso inicial na aplicação:
+```sql
+INSERT INTO users (
+  id,
+  name,
+  email,
+  password,
+  phone,
+  cpf,
+  balance,
+  type,
+  role,
+  created_at,
+  updated_at
+) VALUES (
+  gen_random_uuid(),
+  'Admin Account',
+  'admin@example.com',
+  '$2b$10$/wg28Eov1NvC3JnIdgJgoOZYMAyzAX3Q0/J5yTmhpszxrI15HYjo6',
+  '11999999999',
+  '12345678909',
+  10000.00,
+  'both',
+  'admin',
+  now(),
+  now()
+);
+```
 
 
 ## Estrutura do Projeto
