@@ -2,6 +2,7 @@
 
 Sistema completo de transferências financeiras desenvolvido com NestJS, incluindo autenticação JWT, gestão de usuários, transações, sistema de logging avançado e monitoramento com ELK Stack.
 
+Todos os endpoints da aplicação foram documentados utilizado [Postman](https://www.postman.com/downloads/), você pode acessar a coleção do postman [aqui](https://www.postman.com/winter-zodiac-779832/workspace/adriano-cobuccio-tech-test/collection/31044203-f0149b31-98b5-4f0d-9441-0a0c5cb0a98a?action=share&creator=31044203&active-environment=31044203-5ac75929-4d9e-43b2-8ad3-236442eff7e5).
 
 ## Índice
 
