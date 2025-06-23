@@ -33,7 +33,6 @@ import { SignInUseCase, SignOutUseCase, RefreshTokenUseCase, GetUserProfileUseCa
     RolesGuard,
     UserRepository,
     RefreshTokenRepository,
-    // Use Cases V1
     SignInUseCase,
     SignOutUseCase,
     RefreshTokenUseCase,
@@ -45,4 +44,4 @@ import { SignInUseCase, SignOutUseCase, RefreshTokenUseCase, GetUserProfileUseCa
     JwtStrategy,
   ],
 })
-export class AuthModule {} 
+export class AuthModule {}

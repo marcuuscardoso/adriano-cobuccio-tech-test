@@ -10,7 +10,7 @@ import {
   UseGuards,
   Patch,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../dtos';
+import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../../dtos';
 import { JwtAuthGuard, RolesGuard } from '@modules/auth/guards';
 import { Roles, CurrentUser } from '@modules/auth/decorators';
 import { EUserRole } from '@infra/persistence/database/entities/user.entity';
@@ -20,7 +20,7 @@ import {
   GetAllUsersUseCase,
   UpdateUserUseCase,
   DeleteUserUseCase
-} from '../use-cases';
+} from '../../use-cases';
 import { UserEntity } from '@infra/persistence/database/entities/user.entity';
 
 @Controller('users')

@@ -4,7 +4,7 @@ import { IUseCase } from '@commons/general/interfaces';
 import { BusinessException } from '@commons/general/exceptions';
 import { UserRepository } from '@infra/persistence/database/repositories';
 import { UserEntity } from '@infra/persistence/database/entities/user.entity';
-import { ICreateUserType } from '../types';
+import { ICreateUserType } from '../../types';
 
 @Injectable()
 export class CreateUserUseCase implements IUseCase<ICreateUserType, UserEntity> {
