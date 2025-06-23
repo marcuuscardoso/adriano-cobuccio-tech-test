@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { TransactionRepository } from '@infra/persistence/database/repositories';
 import { TransactionEntity, ETransactionType, ETransactionStatus } from '@infra/persistence/database/entities/transaction.entity';
 import { UserEntity, EUserType } from '@infra/persistence/database/entities/user.entity';
+import { LoggerManager } from '@commons/general/loggers';
 
 interface CreateTransferRequest {
   senderId: string;
@@ -17,10 +18,13 @@ export class CreateTransferUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly dataSource: DataSource,
+    private readonly logger: LoggerManager,
   ) {}
 
   async execute(request: CreateTransferRequest): Promise<TransactionEntity> {
     const { senderId, receiverId, amount, description, createdBy } = request;
+
+    this.logger.info('Transfer initiated', { senderId, receiverId, amount });
 
     this.validateTransferData(senderId, receiverId, amount);
 
@@ -34,8 +38,10 @@ export class CreateTransferUseCase {
       this.validateUserPermissions(sender, receiver);
       this.validateBalance(sender.balance, amount);
 
+      this.logger.info('Updating balances', { senderId, receiverId, amount });
       await this.updateBalances(queryRunner, senderId, receiverId, sender.balance, receiver.balance, amount);
 
+      this.logger.info('Creating transaction record');
       const transaction = await this.createTransaction(queryRunner, {
         senderId,
         receiverId,
@@ -45,10 +51,12 @@ export class CreateTransferUseCase {
       });
 
       await queryRunner.commitTransaction();
+      this.logger.info('Transfer completed successfully', { transactionId: transaction.id });
 
       return await this.transactionRepository.findById(transaction.id) as TransactionEntity;
-    } catch (error) {
+    } catch (error: any) {
       await queryRunner.rollbackTransaction();
+      this.logger.error('Transfer failed', { senderId, receiverId, amount, error: error.message });
       throw error;
     } finally {
       await queryRunner.release();

@@ -8,6 +8,7 @@ import {
   GetTransactionByIdUseCase,
   GetTransactionsByUserUseCase
 } from './use-cases';
+import { LoggerManager } from '@commons/general/loggers';
 
 @Module({
   imports: [DatabaseModule, AuthModule],
@@ -17,6 +18,7 @@ import {
     ReverseTransactionUseCase,
     GetTransactionByIdUseCase,
     GetTransactionsByUserUseCase,
+    LoggerManager,
   ],
   exports: [
     CreateTransferUseCase,

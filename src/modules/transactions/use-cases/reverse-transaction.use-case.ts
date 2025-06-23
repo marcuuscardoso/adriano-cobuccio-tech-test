@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { TransactionRepository } from '@infra/persistence/database/repositories';
 import { TransactionEntity, ETransactionType, ETransactionStatus } from '@infra/persistence/database/entities/transaction.entity';
 import { UserEntity } from '@infra/persistence/database/entities/user.entity';
+import { LoggerManager } from '@commons/general/loggers';
 
 interface ReverseTransactionRequest {
   transactionId: string;
@@ -15,6 +16,7 @@ export class ReverseTransactionUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly dataSource: DataSource,
+    private readonly logger: LoggerManager,
   ) {}
 
   async execute(request: ReverseTransactionRequest): Promise<TransactionEntity> {
@@ -23,6 +25,8 @@ export class ReverseTransactionUseCase {
     if (!transactionId) {
       throw new BadRequestException('Transaction ID is required');
     }
+
+    this.logger.info('Transaction reversal initiated', { transactionId });
 
     const originalTransaction = await this.validateOriginalTransaction(transactionId);
 
@@ -35,8 +39,14 @@ export class ReverseTransactionUseCase {
       
       this.validateReceiverBalance(receiver.balance, originalTransaction.amount);
 
+      this.logger.info('Reverting balances', { 
+        originalSender: originalTransaction.senderId, 
+        originalReceiver: originalTransaction.receiverId, 
+        amount: originalTransaction.amount 
+      });
       await this.revertBalances(queryRunner, originalTransaction, sender.balance, receiver.balance);
 
+      this.logger.info('Creating reversal transaction record');
       const reversalTransaction = await this.createReversalTransaction(queryRunner, {
         originalTransaction,
         reason,
@@ -46,11 +56,13 @@ export class ReverseTransactionUseCase {
       await this.linkTransactions(queryRunner, originalTransaction.id, reversalTransaction.id);
 
       await queryRunner.commitTransaction();
+      this.logger.info('Transaction reversal completed successfully', { reversalTransactionId: reversalTransaction.id });
 
       return await this.transactionRepository.findById(reversalTransaction.id) as TransactionEntity;
 
-    } catch (error) {
+    } catch (error: any) {
       await queryRunner.rollbackTransaction();
+      this.logger.error('Transaction reversal failed', { transactionId, error: error.message });
       throw error;
     } finally {
       await queryRunner.release();
