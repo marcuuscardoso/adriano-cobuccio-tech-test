@@ -78,7 +78,7 @@ npm run start:dev
 
 A aplicação estará disponível em `http://localhost:3025`
 
-Crie um usuário de administrador para ter acesso inicial na aplicação:
+Crie um usuário de administrador para ter acesso inicial na aplicação: (senha do usuário abaixo: password)
 ```sql
 INSERT INTO users (
   id,
