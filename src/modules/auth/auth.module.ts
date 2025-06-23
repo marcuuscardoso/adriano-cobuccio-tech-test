@@ -10,6 +10,7 @@ import { UserRepository } from '@infra/persistence/database/repositories/user.re
 import { RefreshTokenRepository } from '@infra/persistence/database/repositories/refresh-token.repository';
 import { UserEntity, RefreshTokenEntity } from '@infra/persistence/database/entities';
 import { SignInUseCase, SignOutUseCase, RefreshTokenUseCase, GetUserProfileUseCase } from './use-cases/v1';
+import { RegisterUserUseCase } from '@modules/users/use-cases';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SignInUseCase, SignOutUseCase, RefreshTokenUseCase, GetUserProfileUseCa
     SignOutUseCase,
     RefreshTokenUseCase,
     GetUserProfileUseCase,
+    RegisterUserUseCase,
   ],
   exports: [
     JwtAuthGuard,

@@ -1,2 +1,3 @@
-export { ICreateUserType } from './create-user.type';
-export { IUpdateUserType } from './update-user.type';
+export * from './create-user.type';
+export * from './update-user.type';
+export * from './register-user.type';

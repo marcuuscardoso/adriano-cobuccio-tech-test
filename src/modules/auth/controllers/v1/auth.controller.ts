@@ -4,6 +4,8 @@ import { SignInDto } from '../../dto';
 import { JwtAuthGuard } from '../../guards';
 import { CurrentUser } from '../../decorators';
 import { SignInUseCase, SignOutUseCase, RefreshTokenUseCase, GetUserProfileUseCase } from '../../use-cases/v1';
+import { RegisterUserDto, UserResponseDto } from '@modules/users/dtos';
+import { RegisterUserUseCase } from '@modules/users/use-cases';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
@@ -12,7 +14,27 @@ export class AuthController {
     private readonly signOutUseCase: SignOutUseCase,
     private readonly refreshTokenUseCase: RefreshTokenUseCase,
     private readonly getUserProfileUseCase: GetUserProfileUseCase,
+    private readonly registerUserUseCase: RegisterUserUseCase,
   ) {}
+
+  @Post('register')
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() registerUserDto: RegisterUserDto): Promise<UserResponseDto> {
+    const user = await this.registerUserUseCase.execute(registerUserDto);
+    
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      cpf: user.cpf,
+      balance: user.balance,
+      type: user.type,
+      role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    }
+  }
 
   @Post('signin')
   @HttpCode(HttpStatus.OK)
