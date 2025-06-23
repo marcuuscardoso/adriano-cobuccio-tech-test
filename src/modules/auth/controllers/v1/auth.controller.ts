@@ -4,6 +4,7 @@ import { SignInDto } from '../../dto';
 import { JwtAuthGuard } from '../../guards';
 import { CurrentUser } from '../../decorators';
 import { SignInUseCase, SignOutUseCase, RefreshTokenUseCase, GetUserProfileUseCase } from '../../use-cases/v1';
+import { UserProfile } from '../../types';
 import { RegisterUserDto, UserResponseDto } from '@modules/users/dtos';
 import { RegisterUserUseCase } from '@modules/users/use-cases';
 
@@ -43,7 +44,11 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
   ) {
-    return this.signInUseCase.execute(signInDto, req, res);
+    return this.signInUseCase.execute({
+      signInDto,
+      req,
+      res
+    });
   }
 
   @Post('signout')
@@ -52,7 +57,10 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
   ) {
-    return this.signOutUseCase.execute(req, res);
+    return this.signOutUseCase.execute({
+      req,
+      res
+    });
   }
 
   @Post('refresh')
@@ -61,12 +69,17 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
   ) {
-    return this.refreshTokenUseCase.execute(req, res);
+    return this.refreshTokenUseCase.execute({
+      req,
+      res
+    });
   }
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  async me(@CurrentUser() user: any) {
-    return this.getUserProfileUseCase.execute(user);
+  async me(@CurrentUser() user: UserProfile) {
+    return this.getUserProfileUseCase.execute({
+      user
+    });
   }
 }

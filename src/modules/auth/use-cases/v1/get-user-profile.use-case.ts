@@ -1,15 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IUseCase } from '@commons/general/interfaces';
-import { IGetUserProfileType } from '../../types';
-
-export interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  balance: number;
-  role: string;
-  type: string;
-}
+import { IGetUserProfileType, UserProfile } from '../../types';
 
 @Injectable()
 export class GetUserProfileUseCase implements IUseCase<IGetUserProfileType, UserProfile> {
