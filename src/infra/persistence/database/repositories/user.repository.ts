@@ -16,10 +16,20 @@ export class UserRepository {
     });
   }
 
+  async findByCpf(cpf: string): Promise<UserEntity | null> {
+    return this.userRepository.findOne({
+      where: { cpf },
+    });
+  }
+
   async findById(id: string): Promise<UserEntity | null> {
     return this.userRepository.findOne({
       where: { id },
     });
+  }
+
+  async findAll(): Promise<UserEntity[]> {
+    return this.userRepository.find();
   }
 
   async create(userData: Partial<UserEntity>): Promise<UserEntity> {
@@ -31,4 +41,8 @@ export class UserRepository {
     await this.userRepository.update(id, userData);
     return this.findById(id);
   }
-} 
+
+  async delete(id: string): Promise<void> {
+    await this.userRepository.delete(id);
+  }
+}
