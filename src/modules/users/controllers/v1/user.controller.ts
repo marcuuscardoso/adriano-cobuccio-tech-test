@@ -40,7 +40,7 @@ export class UserController {
   async create(@Body() createUserDto: CreateUserDto, @CurrentUser() currentUser: any): Promise<UserResponseDto> {
     const user = await this.createUserUseCase.execute({
       ...createUserDto,
-      createdBy: currentUser.sub,
+      createdBy: currentUser.id,
     });
 
     return this.toResponseDto(user);
@@ -73,7 +73,7 @@ export class UserController {
     const user = await this.updateUserUseCase.execute({
       id,
       ...updateUserDto,
-      updatedBy: currentUser.sub,
+      updatedBy: currentUser.id,
     });
 
     return this.toResponseDto(user);
@@ -83,7 +83,7 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Roles(EUserRole.ADMIN)
   async delete(@Param('id') id: string, @CurrentUser() currentUser: any): Promise<void> {
-    await this.deleteUserUseCase.execute({ id, deletedBy: currentUser.sub });
+    await this.deleteUserUseCase.execute({ id, deletedBy: currentUser.id });
   }
 
   private toResponseDto(user: UserEntity): UserResponseDto {

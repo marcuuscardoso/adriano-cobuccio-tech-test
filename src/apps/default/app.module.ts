@@ -7,6 +7,7 @@ import { HttpModule } from '@nestjs/axios';
 import { InfraModule } from '@infra/infra.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { UserModule } from '@modules/users/user.module';
+import { TransactionModule } from '@modules/transactions/transaction.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { UserModule } from '@modules/users/user.module';
     }),
     InfraModule,
     AuthModule,
-    UserModule
+    UserModule,
+    TransactionModule
   ],
   controllers: [HealthController],
   providers: [

@@ -75,7 +75,7 @@ export class CreateUsersTable1750472084064 implements MigrationInterface {
                     },
                     {
                         name: 'updated_by',
-                        type: 'timestamp',
+                        type: 'uuid',
                         isNullable: true,
                     },
                     {
