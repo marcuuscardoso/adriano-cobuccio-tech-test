@@ -3,13 +3,15 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Response, Request } from 'express';
 import * as bcrypt from 'bcryptjs';
+import { IUseCase } from '@commons/general/interfaces';
 import { UserRepository } from '@infra/persistence/database/repositories/user.repository';
 import { RefreshTokenRepository } from '@infra/persistence/database/repositories/refresh-token.repository';
 import { SignInDto } from '../../dto';
 import { AuthResponse, JwtPayload } from '../../interfaces';
+import { ISignInType } from '../../types';
 
 @Injectable()
-export class SignInUseCase {
+export class SignInUseCase implements IUseCase<ISignInType, AuthResponse> {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly refreshTokenRepository: RefreshTokenRepository,
@@ -17,7 +19,8 @@ export class SignInUseCase {
     private readonly configService: ConfigService
   ) {}
 
-  async execute(signInDto: SignInDto, req: Request, res: Response): Promise<AuthResponse> {
+  async execute(params: ISignInType): Promise<AuthResponse> {
+    const { signInDto, req, res } = params;
     const { email, password } = signInDto;
 
     const user = await this.userRepository.findByEmail(email);

@@ -1,26 +1,22 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { IUseCase } from '@commons/general/interfaces';
 import { TransactionRepository } from '@infra/persistence/database/repositories';
 import { TransactionEntity, ETransactionType, ETransactionStatus } from '@infra/persistence/database/entities/transaction.entity';
 import { UserEntity } from '@infra/persistence/database/entities/user.entity';
 import { LoggerManager } from '@commons/general/loggers';
-
-interface ReverseTransactionRequest {
-  transactionId: string;
-  reason?: string;
-  reversedBy?: string;
-}
+import { IReverseTransactionType } from '../types';
 
 @Injectable()
-export class ReverseTransactionUseCase {
+export class ReverseTransactionUseCase implements IUseCase<IReverseTransactionType, TransactionEntity> {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly dataSource: DataSource,
     private readonly logger: LoggerManager
   ) {}
 
-  async execute(request: ReverseTransactionRequest): Promise<TransactionEntity> {
-    const { transactionId, reason, reversedBy } = request;
+  async execute(params: IReverseTransactionType): Promise<TransactionEntity> {
+    const { transactionId, reason, reversedBy } = params;
 
     if (!transactionId) {
       throw new BadRequestException('Transaction ID is required');

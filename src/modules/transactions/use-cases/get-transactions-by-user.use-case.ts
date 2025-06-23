@@ -1,21 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { IUseCase } from '@commons/general/interfaces';
 import { TransactionRepository } from '@infra/persistence/database/repositories';
 import { TransactionEntity } from '@infra/persistence/database/entities/transaction.entity';
 import { LoggerManager } from '@commons/general/loggers';
-
-interface GetTransactionsByUserRequest {
-  userId: string;
-}
+import { IGetTransactionsByUserType } from '../types';
 
 @Injectable()
-export class GetTransactionsByUserUseCase {
+export class GetTransactionsByUserUseCase implements IUseCase<IGetTransactionsByUserType, TransactionEntity[]> {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly logger: LoggerManager
   ) {}
 
-  async execute(request: GetTransactionsByUserRequest): Promise<TransactionEntity[]> {
-    const { userId } = request;
+  async execute(params: IGetTransactionsByUserType): Promise<TransactionEntity[]> {
+    const { userId } = params;
 
     try {
       const transactions = await this.transactionRepository.findByUserId(userId);

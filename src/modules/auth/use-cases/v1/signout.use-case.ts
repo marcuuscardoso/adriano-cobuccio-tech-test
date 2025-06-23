@@ -1,14 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Response } from 'express';
+import { IUseCase } from '@commons/general/interfaces';
 import { RefreshTokenRepository } from '@infra/persistence/database/repositories/refresh-token.repository';
+import { ISignOutType } from '../../types';
+
+export interface SignOutResponse {
+  message: string;
+}
 
 @Injectable()
-export class SignOutUseCase {
+export class SignOutUseCase implements IUseCase<ISignOutType, SignOutResponse> {
   constructor(
     private readonly refreshTokenRepository: RefreshTokenRepository
   ) {}
 
-  async execute(req: Request, res: Response): Promise<{ message: string }> {
+  async execute(params: ISignOutType): Promise<SignOutResponse> {
+    const { req, res } = params;
     const refreshToken = req.cookies?.refreshToken;
 
     if (refreshToken) {

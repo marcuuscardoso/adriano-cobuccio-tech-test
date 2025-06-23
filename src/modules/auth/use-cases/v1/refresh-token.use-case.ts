@@ -1,19 +1,21 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { Response, Request } from 'express';
+import { IUseCase } from '@commons/general/interfaces';
 import { RefreshTokenRepository } from '@infra/persistence/database/repositories/refresh-token.repository';
 import { AuthResponse, JwtPayload } from '../../interfaces';
+import { IRefreshTokenType } from '../../types';
 
 @Injectable()
-export class RefreshTokenUseCase {
+export class RefreshTokenUseCase implements IUseCase<IRefreshTokenType, AuthResponse> {
   constructor(
     private readonly refreshTokenRepository: RefreshTokenRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
   ) {}
 
-  async execute(req: Request, res: Response): Promise<AuthResponse> {
+  async execute(params: IRefreshTokenType): Promise<AuthResponse> {
+    const { req, res } = params;
     const refreshToken = req.cookies?.refreshToken;
 
     if (!refreshToken) {

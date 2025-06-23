@@ -1,28 +1,22 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { IUseCase } from '@commons/general/interfaces';
 import { TransactionRepository } from '@infra/persistence/database/repositories';
 import { TransactionEntity, ETransactionType, ETransactionStatus } from '@infra/persistence/database/entities/transaction.entity';
 import { UserEntity, EUserType } from '@infra/persistence/database/entities/user.entity';
 import { LoggerManager } from '@commons/general/loggers';
-
-interface CreateTransferRequest {
-  senderId: string;
-  receiverId: string;
-  amount: number;
-  description?: string;
-  createdBy?: string;
-}
+import { ICreateTransferType } from '../types';
 
 @Injectable()
-export class CreateTransferUseCase {
+export class CreateTransferUseCase implements IUseCase<ICreateTransferType, TransactionEntity> {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly dataSource: DataSource,
     private readonly logger: LoggerManager
   ) {}
 
-  async execute(request: CreateTransferRequest): Promise<TransactionEntity> {
-    const { senderId, receiverId, amount, description, createdBy } = request;
+  async execute(params: ICreateTransferType): Promise<TransactionEntity> {
+    const { senderId, receiverId, amount, description, createdBy } = params;
 
     this.logger.info('Transfer initiated', { senderId, receiverId, amount });
 
